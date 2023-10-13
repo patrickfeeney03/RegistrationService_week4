@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 public class RegistrationController {
-    private NotificationService notificationService;
+    private final NotificationService notificationService;
 
     @Autowired
     public RegistrationController(NotificationService notificationService) {
@@ -20,7 +20,8 @@ public class RegistrationController {
 
     @PostMapping("/confirm")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Map<String, String> handleRegistrationRequests(UserDetails userDetails) {
-        return notificationService.notifyUser();
+    public Map<String, String> handleRegistrationRequests(@RequestBody UserDetails userDetails) {
+        System.out.println("User Details received at Registration Controller: " + userDetails);
+        return notificationService.notifyUser(userDetails);
     }
 }
